@@ -150,19 +150,21 @@ Create a `.env` file in `/backend`:
 
 ```env
 PORT=5000
-MONGO_URI=mongodb://localhost:27017/tasknest
+
+MONGODB_URI=your_mongodb_connection_string
+
 JWT_SECRET=your_jwt_secret_here
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
 
-# Email (Nodemailer)
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_app_password
+FRONTEND_URL=http://localhost:5173
 
-# Arcjet (optional — remove if not using)
-ARCJET_KEY=your_arcjet_key
+# SendGrid — used for verification & password reset emails
+SEND_GRID_API=your_sendgrid_api_key
+FROM_EMAIL=your_verified_sender@example.com
+
+# Arcjet — bot protection & rate limiting
+# Set to "development" locally; leave unset in production
+ARCJET_ENV=development
+ARCJET_KEY=your_arcjet_site_key
 ```
 
 Start the backend:
@@ -198,13 +200,14 @@ The app will be available at **http://localhost:5173**.
 
 | Variable | Description |
 |---|---|
-| `MONGO_URI` | MongoDB connection string |
+| `PORT` | Port the backend server listens on (default `5000`) |
+| `MONGODB_URI` | MongoDB connection string (local or Atlas) |
 | `JWT_SECRET` | Secret key for signing JWT tokens |
-| `JWT_EXPIRES_IN` | Token expiry (e.g. `7d`) |
-| `CLIENT_URL` | Frontend URL (for CORS + email links) |
-| `EMAIL_USER` | SMTP email address |
-| `EMAIL_PASS` | SMTP password / app password |
-| `ARCJET_KEY` | Arcjet API key (rate limiting — optional) |
+| `FRONTEND_URL` | Frontend URL used for CORS and email reset links |
+| `SEND_GRID_API` | SendGrid API key for transactional emails |
+| `FROM_EMAIL` | Verified sender address used in outgoing emails |
+| `ARCJET_ENV` | Set to `development` locally to disable production rules |
+| `ARCJET_KEY` | Arcjet site key for rate limiting and bot protection |
 
 ---
 
@@ -273,5 +276,5 @@ MIT — free to use, modify and distribute.
 
 ## Author
 
-Built with ☕ and `#e8ff47` by the TaskNest team.  
-Questions or feedback? **tasknest.notify@gmail.com**
+Built with ☕ and `#e8ff47` by **Abhishek Vishwakarma**.  
+Questions or feedback? **abhishekvishwakarma1149@gmail.com**
